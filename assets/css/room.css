@@ -1,0 +1,485 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.flex_space {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Header Start */
+header {
+  height: 10vh;
+}
+header .content {
+  display: flex;
+  padding: 0 20px 10px 20px;
+  background-color: #fff;
+  width: 100%;
+  z-index: 999;
+  position: fixed;
+}
+header .content .logo a {
+  color: #000;
+  letter-spacing: -1px;
+  font-size: 25px;
+  font-weight: 300;
+}
+header .content .logo a span {
+  color: #7fc142;
+  font-size: 30px;
+  font-style: italic;
+  font-weight: 600;
+}
+header ul {
+  display: inline-block;
+}
+header ul li {
+  display: inline-block;
+  text-transform: uppercase;
+}
+header ul li a {
+  color: #000;
+  margin: 0 10px;
+  text-decoration: none;
+  transition: 0.5s;
+}
+header ul li a:hover {
+  color: #7fc142;
+}
+header i {
+  margin: 0 20px;
+}
+header button {
+  padding: 13px 40px;
+}
+/* header .navlinks span{
+        display: none;
+    }
+    
+    @media screen and(max-width:768px){
+        header ul{
+            position: absolute;
+            top: 100px;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #009f7f;
+            overflow: hidden;
+            transition: max-height 0.5s;
+            text-align: center;
+            z-index: 9;
+        }
+        header ul li{
+            display: block;
+        }
+        header ul li a{
+            color: white;
+        }
+        header i {
+            color: white;
+        }
+        header .navlinks span{
+            color: black;
+            display: block;
+            cursor: pointer;
+            line-height: 10vh;
+            font-size: 25px;
+        }
+    } */
+/* Header End */
+
+/* Suite Rooms Start */
+/* Rooms section */
+.rooms {
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+.konten {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.konten img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+.about-rooms {
+  flex: 1;
+}
+
+.about-rooms h2 {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.deskripsi h5 {
+  font-size: 1.2em;
+  margin-bottom: 5px;
+}
+
+.deskripsi p {
+  line-height: 1.6;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.rate {
+  color: #ffd700;
+  margin-bottom: 20px;
+}
+
+.rate .fa-star,
+.rate .fa-star-half {
+  font-size: 1.2em;
+}
+
+.fasilitas ul {
+  list-style: none;
+  padding: 0;
+}
+
+.fasilitas ul li {
+  background: url("data:image/svg+xml;base64,<SVG_ICON>") no-repeat left center;
+  padding-left: 30px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.harga {
+  margin-top: 20px;
+}
+
+.harga h3 {
+  font-size: 1.8em;
+  color: #333;
+}
+
+.harga span {
+  font-size: 0.8em;
+  color: #777;
+}
+
+/* Booking form */
+.book {
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.book h2 {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.book label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.book input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.book button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.book button:hover {
+  background-color: #0056b3;
+}
+/* Suite Rooms End */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.flex_space {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Header Start */
+header {
+  height: 10vh;
+}
+header .content {
+  display: flex;
+  padding: 0 20px 10px 20px;
+  background-color: #fff;
+  width: 100%;
+  z-index: 999;
+  position: fixed;
+}
+header .content .logo a {
+  color: #000;
+  letter-spacing: -1px;
+  font-size: 25px;
+  font-weight: 300;
+}
+header .content .logo a span {
+  color: #7fc142;
+  font-size: 30px;
+  font-style: italic;
+  font-weight: 600;
+}
+header ul {
+  display: inline-block;
+}
+header ul li {
+  display: inline-block;
+  text-transform: uppercase;
+}
+header ul li a {
+  color: #000;
+  margin: 0 10px;
+  text-decoration: none;
+  transition: 0.5s;
+}
+header ul li a:hover {
+  color: #7fc142;
+}
+header i {
+  margin: 0 20px;
+}
+header button {
+  padding: 13px 40px;
+}
+/* header .navlinks span{
+        display: none;
+    }
+    
+    @media screen and(max-width:768px){
+        header ul{
+            position: absolute;
+            top: 100px;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #009f7f;
+            overflow: hidden;
+            transition: max-height 0.5s;
+            text-align: center;
+            z-index: 9;
+        }
+        header ul li{
+            display: block;
+        }
+        header ul li a{
+            color: white;
+        }
+        header i {
+            color: white;
+        }
+        header .navlinks span{
+            color: black;
+            display: block;
+            cursor: pointer;
+            line-height: 10vh;
+            font-size: 25px;
+        }
+    } */
+/* Header End */
+
+.wrapper {
+    background-color: #fff;
+    padding: 40px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-radius: 8px;
+    max-width: 1200px;
+}
+
+/* Rooms section */
+.rooms {
+    margin: 0 auto;
+    background-color: #efefef;
+}
+
+.konten {
+    display: flex;
+    flex: 1;
+    margin-right: 40px;
+}
+
+.konten img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-right: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.about-rooms {
+    flex: 1;
+}
+
+.about-rooms h2 {
+    text-align: center;
+    font-size: 2.5em;
+    margin: 20px 0;
+    color: #333;
+}
+
+.deskripsi h5,
+.fasilitas h5 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #7fc142;
+}
+
+.deskripsi p {
+    line-height: 1.8;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.rate {
+    color: #FFD700;
+    margin-bottom: 20px;
+}
+
+.rate .fa-star,
+.rate .fa-star-half {
+    font-size: 1.5em;
+}
+
+.fasilitas ul {
+    list-style: none;
+    padding: 0;
+}
+
+.fasilitas ul li {
+    padding-left: 35px;
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 1.1em;
+}
+
+.harga {
+    margin-top: 30px;
+}
+
+.harga h3 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.harga span {
+    font-size: 25px;
+    font-style: italic;
+    color: #7fc142;
+    margin-left: 50px;
+}
+
+/* Booking form */
+.book {
+    background-color: #fff;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 350px; /* Fixed width for booking form */
+    border-radius: 8px;
+}
+
+.book h2 {
+    font-size: 2em;
+    margin-bottom: 25px;
+    color: #7fc142;
+    text-align: center;
+}
+
+.book label {
+    display: block;
+    margin-bottom: 10px;
+    color: #555;
+    font-weight: bold;
+}
+
+.book input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 25px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    color: #333;
+}
+
+.book input:disabled {
+    background-color: #e9ecef;
+}
+
+.book button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.book button:hover {
+    background-color: #0056b3;
+}
+
+.total-harga {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.total-harga h3 {
+    font-size: 1.8em;
+    color: #333;
+}
+
+.total-harga span {
+    font-size: 1em;
+    color: #7fc142;
+}
+/* Suite Rooms End */
