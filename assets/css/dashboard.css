@@ -1,0 +1,106 @@
+/* Main Content Start */
+.main-content {
+  margin-left: 5rem;
+  padding: 0.5rem 1rem;
+}
+body.active .main-content {
+  margin-left: 15rem;
+}
+
+header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0.1rem 1rem;
+  background-color: #fff;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+/* Dashboard */
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  text-align: center;
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+.dashboard-desk {
+  grid-column: 1 / -1;
+  margin-bottom: 0.5em;
+}
+.dashboard-desk h1 {
+  font-size: 2.5em;
+  color: #212121;
+}
+.dashboard-desk p {
+  font-size: 1.2em;
+  color: #aaa;
+  margin: 0;
+}
+.dashboard-desk span {
+  font-size: 17px;
+  color: #16a085;
+  font-weight: 600;
+}
+.dashboard-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.dashboard-card h3 {
+  margin: 0;
+  font-size: 1.4em;
+  color: #fff;
+}
+.dashboard-card p {
+  font-size: 1.6em;
+  color: #555;
+  margin: 10px 0 0;
+  font-weight: 600;
+}
+.dashboard-card .icon {
+  font-size: 2.5em;
+  color: #16a085;
+  margin-bottom: 10px;
+}
+.dashboard-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to top right,
+    rgb(22, 160, 133, 0.8),
+    rgb(22, 160, 133, 0.2)
+  );
+  transform: rotate(45deg);
+  transition: transform 0.5s;
+  z-index: 0;
+}
+.dashboard-card:hover::before {
+  transform: rotate(45deg) translate(10%, 10%);
+}
+.dashboard-card .icon,
+.dashboard-card h3,
+.dashboard-card p {
+  position: relative;
+  z-index: 1;
+}
+.dashboard-card.total-stok {
+  grid-column: 1 / -1;
+}

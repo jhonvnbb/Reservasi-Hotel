@@ -1,4 +1,4 @@
-<?php require_once "../../controllerUserData.php"; ?>
+<?php require_once "../controllerUserData.php"; ?>
 <?php 
 $email = $_SESSION['email'];
 $password = $_SESSION['password'];
@@ -13,25 +13,50 @@ if($email != false && $password != false){
         $alamat = $fetch_info['alamat'];
         if($status == "verified"){
             if($code != 0){
-                header('Location: ../../user/reset/verify/');
+                header('Location: ../user/reset/verify/');
             }
         }else{
-            header('Location: ../../user/signup/verify/');
+            header('Location: ../user/signup/verify/');
         }
     }
 }else{
-    header('Location: ../../user/login/');
+    header('Location: ../user/login/');
 }
+
+if(isset($_GET['id'])) {
+    $room_id = $_GET['id'];
+    $room_query = "SELECT * FROM kamar WHERE id = $room_id";
+    $room_result = mysqli_query($con, $room_query);
+    if(mysqli_num_rows($room_result) > 0) {
+        $room = mysqli_fetch_assoc($room_result);
+        
+        // Query to count the number of verified bookings for this room
+        $booking_query = "SELECT COUNT(*) as total_bookings FROM pesanan WHERE id_kamar = $room_id AND status = 'PESANAN DIVERIFIKASI'";
+        $booking_result = mysqli_query($con, $booking_query);
+        $bookings = mysqli_fetch_assoc($booking_result);
+        $total_bookings = $bookings['total_bookings'];
+        
+        // Calculate available rooms
+        $available_rooms = $room['tersedia'] - $total_bookings;
+    } else {
+        echo "Room not found.";
+        exit;
+    }
+} else {
+    echo "Invalid room ID.";
+    exit;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo $fetch_info['name'] ?> | Junior-Suites</title>
+    <title><?php echo $fetch_info['name'] ?> | Suite-Rooms</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <link rel="stylesheet" href="../../../assets/css/room.css" />
+    <link rel="stylesheet" href="../../assets/css/room.css" />
     <!-- Font Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -81,20 +106,20 @@ if($email != false && $password != false){
         </div>
         <div class="navlinks mt-4">
           <ul id="menulist">
-            <li><a href="../../#home">home</a></li>
-            <li><a href="../../#about">about</a></li>
-            <li><a href="../../#rooms">rooms</a></li>
+            <li><a href="../#home">home</a></li>
+            <li><a href="../#about">about</a></li>
+            <li><a href="../#rooms">rooms</a></li>
             <!-- <li><a href="#review">Review</a></li> -->
             <!-- <li><a href="../../#news">news</a></li> -->
-            <li><a href="../../#contact">contact</a></li>
+            <li><a href="../#contact">contact</a></li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle text-success" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa fa-user"></i> <?php echo $fetch_info['name'] ?>
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                <li><a class="dropdown-item" href="../../profile/">Profile</a></li>
-                <li><a class="dropdown-item" href="../../pesanan/">Pesanan Saya</a></li>
-                <li><a class="dropdown-item" href="../../logout-user.php">Log out</a></li>
+                <li><a class="dropdown-item" href="../profile/">Profile</a></li>
+                <li><a class="dropdown-item" href="../pesanan/">Pesanan Saya</a></li>
+                <li><a class="dropdown-item" href="../logout-user.php">Log out</a></li>
               </ul>
             </li>
           </ul>
@@ -106,32 +131,38 @@ if($email != false && $password != false){
     <section class="rooms">
     <div class="wrapper">
         <div class="konten">
-            <img src="../../../assets/img/b6.jpg" alt="suite-rooms">
+            <img src="<?php echo '../../admin/upload-barang/' . basename($room['gambar']); ?>" alt="<?php echo $room['model']; ?>">
             <div class="about-rooms">
-                <h2>Junior Suites</h2>
+                <h2><?php echo $room['model']; ?></h2>
                 <div class="deskripsi">
                     <h5>Deskripsi</h5>
-                    <p>Junior suite berukuran lebih kecil dari suite biasa karena tidak memiliki pemisah yang kokoh antara kamar tidur dan ruang tamu, seperti setengah dinding. Suite ini memiliki ruang tamu kecil yang memanjang dari ruang kamar tidur. Selain itu, kamar-kamar ini biasanya menawarkan sofa dan bathtub yang lebih besar di kamar mandi. Junior suites adalah kamar hotel yang biasanya lebih besar daripada kamar standar, tetapi lebih kecil daripada suite yang lebih besar seperti Presidential Suite. Junior suites biasanya dirancang untuk memberikan lebih banyak ruang dan kenyamanan kepada tamu daripada kamar standar, tetapi dengan harga yang lebih terjangkau daripada suite yang lebih besar.</p>
+                    <p><?php echo $room['deskripsi']; ?></p>
                     <div class="rate">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
+                        <?php 
+                        $rating = rand(3, 5);
+                        for($i = 0; $i < $rating; $i++) {
+                            echo '<i class="fa fa-star"></i>';
+                        }
+                        if($rating < 5) {
+                            echo '<i class="fa fa-star-half"></i>';
+                        }
+                        ?>
                     </div>
+                    <h5>Kamar Tersedia</h5>
+                        <p><?php echo $available_rooms ?> Kamar</p>
                 </div>
                 <div class="fasilitas">
-                  <h5>Fasilitas</h5>
+                    <h5>Fasilitas</h5>
                     <ul>
-                        <li>Fasilitas Tambahan</li>
-                        <li>Ruangan Mewah</li>
-                        <li>Tempat Tidur</li>
-                        <li>Area Duduk</li>
-                        <li>Kamar Mandi Mewah</li>
+                        <li><?php echo $room['fasilitas1']; ?></li>
+                        <li><?php echo $room['fasilitas2']; ?></li>
+                        <li><?php echo $room['fasilitas3']; ?></li>
+                        <li><?php echo $room['fasilitas4']; ?></li>
+                        <li><?php echo $room['fasilitas5']; ?></li>
                     </ul>
                 </div>
                 <div class="harga">
-                    <h3>Rp.2.050.000,00 <br> <span>/ Per Malam</span></h3>
+                    <h3>Rp.<?php echo number_format($room['harga'], 0, ',', '.'); ?> <br> <span>/ Per Malam</span></h3>
                 </div>
             </div>
         </div>
@@ -151,7 +182,9 @@ if($email != false && $password != false){
                 <input type="text" name="alamat" id="alamat" value="<?php echo $fetch_info['alamat'] ?>" readonly>
 
                 <label for="kamar">Kamar</label>
-                <input type="text" name="kamar" id="kamar" value="Junior-Suites" readonly>
+                <input type="text" name="kamar" id="kamar" value="<?php echo $room['model'] ?>" readonly>
+
+                <input type="number" name="id_kamar" id="id_kamar" value="<?php echo $room_id ?>" hidden>
 
                 <label for="tanggal_checkin">Tanggal Check In</label>
                 <input type="date" name="tanggal_checkin" id="tanggal_checkin" required onchange="calculatePrice()">
@@ -182,30 +215,30 @@ if($email != false && $password != false){
     </div>
 </section>
 
-<script>
-    function calculatePrice() {
-        const checkin = document.getElementById('tanggal_checkin').value;
-        const checkout = document.getElementById('tanggal_checkout').value;
-        const pricePerNight = 2050000;
-
-        if (checkin && checkout) {
-            const checkinDate = new Date(checkin);
-            const checkoutDate = new Date(checkout);
-            const timeDiff = checkoutDate - checkinDate;
-            const dayDiff = timeDiff / (1000 * 3600 * 24);
-
-            if (dayDiff > 0) {
-                const totalPrice = dayDiff * pricePerNight;
-                document.getElementById('total-harga').textContent = `Rp.${totalPrice.toLocaleString('id-ID')},00`;
-                document.getElementById('total_harga_input').value = totalPrice;
-            } else {
-                document.getElementById('total-harga').textContent = "Tanggal tidak valid";
-                document.getElementById('total_harga_input').value = ''; 
+    <script>
+        function calculatePrice() {
+            const checkin = document.getElementById('tanggal_checkin').value;
+            const checkout = document.getElementById('tanggal_checkout').value;
+            const pricePerNight = <?php echo $room['harga'] ?>;
+        
+            if (checkin && checkout) {
+                const checkinDate = new Date(checkin);
+                const checkoutDate = new Date(checkout);
+                const timeDiff = checkoutDate - checkinDate;
+                const dayDiff = timeDiff / (1000 * 3600 * 24);
+            
+                if (dayDiff > 0) {
+                    const totalPrice = dayDiff * pricePerNight;
+                    document.getElementById('total-harga').textContent = `Rp.${totalPrice.toLocaleString('id-ID')},00`;
+                    document.getElementById('total_harga_input').value = totalPrice;
+                } else {
+                    document.getElementById('total-harga').textContent = "Tanggal tidak valid";
+                    document.getElementById('total_harga_input').value = ''; //  tanggal tidak valid
+                }
+              
             }
-
         }
-    }
-</script>
+    </script>
 
     <!-- Footer Start -->
     <footer

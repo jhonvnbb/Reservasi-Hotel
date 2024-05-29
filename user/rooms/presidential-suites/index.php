@@ -71,6 +71,8 @@ if($email != false && $password != false){
       integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
       crossorigin="anonymous"
     ></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     
   </head>
   <body>
@@ -85,7 +87,7 @@ if($email != false && $password != false){
             <li><a href="../../#about">about</a></li>
             <li><a href="../../#rooms">rooms</a></li>
             <!-- <li><a href="#review">Review</a></li> -->
-            <li><a href="../../#news">news</a></li>
+            <!-- <li><a href="../../#news">news</a></li> -->
             <li><a href="../../#contact">contact</a></li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle text-success" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -197,10 +199,10 @@ if($email != false && $password != false){
             if (dayDiff > 0) {
                 const totalPrice = dayDiff * pricePerNight;
                 document.getElementById('total-harga').textContent = `Rp.${totalPrice.toLocaleString('id-ID')},00`;
-                document.getElementById('total_harga_input').value = totalPrice; // Tambahkan baris ini
+                document.getElementById('total_harga_input').value = totalPrice;
             } else {
                 document.getElementById('total-harga').textContent = "Tanggal tidak valid";
-                document.getElementById('total_harga_input').value = ''; // Tambahkan baris ini untuk menghapus nilai jika tanggal tidak valid
+                document.getElementById('total_harga_input').value = ''; 
             }
 
         }
@@ -291,6 +293,8 @@ if($email != false && $password != false){
     <script>
       feather.replace();
     </script>
+
+    <script src="sweetalert2.all.min.js"></script>
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

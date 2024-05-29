@@ -9,6 +9,17 @@ if($email != false && $password != false){
         $fetch_info = mysqli_fetch_assoc($run_Sql);
         $status = $fetch_info['status'];
         $code = $fetch_info['code'];
+
+        $total_kamar_query = "SELECT COUNT(*) as total_kamar FROM kamar";
+        $total_user_query = "SELECT COUNT(*) as total_user FROM usertable";
+        $total_admin_query = "SELECT COUNT(*) as total_admin FROM admin";
+        $total_tersedia_query = "SELECT SUM(tersedia) as total_tersedia FROM kamar";
+
+        $total_kamar_result = mysqli_fetch_assoc(mysqli_query($con, $total_kamar_query))['total_kamar'];
+        $total_user_result = mysqli_fetch_assoc(mysqli_query($con, $total_user_query))['total_user'];
+        $total_admin_result = mysqli_fetch_assoc(mysqli_query($con, $total_admin_query))['total_admin'];
+        $total_tersedia_result = mysqli_fetch_assoc(mysqli_query($con, $total_tersedia_query))['total_tersedia'];
+
         if($status == "verified"){
             if($code != 0){
                 header('Location: ../user/reset/verify/');
@@ -20,6 +31,16 @@ if($email != false && $password != false){
 }else{
     header('Location: ../user/login/');
 }
+
+// Fetch room data
+$room_query = "SELECT * FROM kamar";
+$room_result = mysqli_query($con, $room_query);
+$rooms = [];
+while($row = mysqli_fetch_assoc($room_result)) {
+    $rooms[] = $row;
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,7 +104,7 @@ if($email != false && $password != false){
             <li><a href="#about">about</a></li>
             <li><a href="#rooms">rooms</a></li>
             <!-- <li><a href="#review">Review</a></li> -->
-            <li><a href="#news">news</a></li>
+            <!-- <li><a href="#news">news</a></li> -->
             <li><a href="#contact">contact</a></li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle text-success" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -114,6 +135,7 @@ if($email != false && $password != false){
         }
     </script> -->
 
+    <!-- Home -->
     <section class="home" id="home">
       <div class="content">
         <div class="owl-carousel owl-theme">
@@ -138,8 +160,8 @@ if($email != false && $password != false){
                 Inspirasi, inovasi, integritas - Aston Serve
               </p>
               <div class="flex">
-                <button class="primary-btn">READ MORE</button>
-                <button class="secondary-btn">CONTACT</button>
+                <button class="primary-btn" onclick="window.location.href='./#about'">READ MORE</button>
+                <button class="secondary-btn" onclick="window.location.href='./#contact'">CONTACT</button>
               </div>
             </div>
           </div>
@@ -151,8 +173,8 @@ if($email != false && $password != false){
                 Inspirasi, inovasi, integritas - Aston Serve
               </p>
               <div class="flex">
-                <button class="primary-btn">READ MORE</button>
-                <button class="secondary-btn">CONTACT</button>
+                <button class="primary-btn" onclick="window.location.href='./#about'">READ MORE</button>
+                <button class="secondary-btn" onclick="window.location.href='./#contact'">CONTACT</button>
               </div>
             </div>
           </div>
@@ -164,8 +186,8 @@ if($email != false && $password != false){
                 Inspirasi, inovasi, integritas - Aston Serve
               </p>
               <div class="flex">
-                <button class="primary-btn">READ MORE</button>
-                <button class="secondary-btn">CONTACT</button>
+                <button class="primary-btn" onclick="window.location.href='./#about'">READ MORE</button>
+                <button class="secondary-btn" onclick="window.location.href='./#contact'">CONTACT</button>
               </div>
             </div>
           </div>
@@ -177,8 +199,8 @@ if($email != false && $password != false){
                 Inspirasi, inovasi, integritas - Aston Serve
               </p>
               <div class="flex">
-                <button class="primary-btn">READ MORE</button>
-                <button class="secondary-btn">CONTACT</button>
+                <button class="primary-btn" onclick="window.location.href='./#about'">READ MORE</button>
+                <button class="secondary-btn" onclick="window.location.href='./#contact'">CONTACT</button>
               </div>
             </div>
           </div>
@@ -190,8 +212,8 @@ if($email != false && $password != false){
                 Inspirasi, inovasi, integritas - Aston Serve
               </p>
               <div class="flex">
-                <button class="primary-btn">READ MORE</button>
-                <button class="secondary-btn">CONTACT</button>
+                <button class="primary-btn" onclick="window.location.href='./#about'">READ MORE</button>
+                <button class="secondary-btn" onclick="window.location.href='./#contact'">CONTACT</button>
               </div>
             </div>
           </div>
@@ -280,6 +302,7 @@ if($email != false && $password != false){
       </div>
     </section> -->
 
+    <!-- About -->
     <section class="about top" id="about">
       <div class="container flex">
         <div class="left">
@@ -301,28 +324,29 @@ if($email != false && $password != false){
       </div>
     </section>
 
+    <!-- Counter -->
     <section class="counter top">
       <div class="container grid">
         <div class="box">
-          <h1>5000+</h1>
+          <h1><?php echo $total_user_result; ?></h1>
           <span>Customer</span>
         </div>
         <div class="box">
-          <h1>87</h1>
-          <span>VIP Customer</span>
+          <h1><?php echo $total_tersedia_result; ?></h1>
+          <span>Total Rooms</span>
         </div>
         <div class="box">
-          <h1>209</h1>
-          <span>Employee</span>
+          <h1><?php echo $total_admin_result; ?></h1>
+          <span>Admin</span>
         </div>
         <div class="box">
-          <h1>110</h1>
-          <span>Room</span>
+          <h1><?php echo $total_kamar_result; ?></h1>
+          <span>Room Model</span>
         </div>
       </div>
     </section>
 
-    <section class="rooms" id="rooms">
+    <!-- <section class="rooms" id="rooms">
       <div class="container top">
         <div class="heading">
           <h1>EXPLORE</h1>
@@ -471,6 +495,47 @@ if($email != false && $password != false){
           </div>
         </div>
       </div>
+    </section> -->
+
+    <!-- Rooms -->
+    <section class="rooms" id="rooms">
+        <div class="container top">
+            <div class="heading">
+                <h1>EXPLORE</h1>
+                <h2>Our Rooms</h2>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt, odit.</p>
+            </div>
+            <div class="content mtop">
+                <div class="owl-carousel owl-carousel1 owl-theme">
+                    <?php foreach($rooms as $room): ?>
+                    <div class="items">
+                        <div class="image">
+                          <img src="<?php echo '../admin/upload-barang/' . basename($room['gambar']); ?>" alt="<?php echo $room['model']; ?>" style="height: 270px;">
+                        </div>
+                        <div class="text">
+                            <h2><?php echo $room['model']; ?></h2>
+                            <div class="rate flex">
+                                <?php 
+                                $rating = rand(3, 5); // Random Rating Star
+                                for($i = 0; $i < $rating; $i++) {
+                                    echo '<i class="fa fa-star"></i>';
+                                }
+                                if($rating < 5) {
+                                    echo '<i class="fa fa-star-half"></i>';
+                                }
+                                ?>
+                            </div>
+                            <p><?php echo substr($room['deskripsi'], 0, 100) . '...'; ?></p>
+                            <div class="button flex">
+                                <button class="primary-btn" onclick="showRoomDetail(<?php echo $room['id']; ?>)">BOOK NOW</button>
+                                <h3>IDR <?php echo number_format($room['harga']/1000, 0, ',', '.'); ?>K <span><br>Per Malam</span></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
     </section>
 
     <script>
@@ -493,8 +558,13 @@ if($email != false && $password != false){
           },
         },
       });
+
+      function showRoomDetail(roomId) {
+          window.location.href = './rooms/?id=' + roomId;
+      }
     </script>
 
+    <!-- Galery -->
     <section class="gallery">
       <div class="container top">
         <div class="heading">
@@ -749,6 +819,7 @@ if($email != false && $password != false){
       });
     </script>
 
+    <!-- Fasilitas -->
     <section class="facilities top">
       <div class="container">
         <div class="heading">
@@ -841,7 +912,7 @@ if($email != false && $password != false){
       });
     </script> -->
 
-    <section class="news top rooms" id="news">
+    <!-- <section class="news top rooms" id="news">
       <div class="container">
         <div class="heading">
           <h1>NEWS</h1>
@@ -914,8 +985,9 @@ if($email != false && $password != false){
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
 
+    <!-- Kontak -->
     <section class="kontak" id="contact">
       <div class="konten">
         <div class="deskripsi">
@@ -1023,8 +1095,8 @@ if($email != false && $password != false){
             </div>
           </div>
         </section>
-      </footer>
-      <!-- Footer End -->
+    </footer>
+    <!-- Footer End -->
 
     <script>
       feather.replace();

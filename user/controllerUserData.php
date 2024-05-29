@@ -189,43 +189,41 @@ if(isset($_POST['signup'])){
         $target_dir = "../upload-profile/";
         $target_file = $target_dir . basename($file["name"]);
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-        $uploadOk = 1;
-        $maxFileSize = 1000000; // 1MB
-
-        // Cek gambar atau tidak
+        $maxFileSize = 1000000;
+    
+        // Format file yang diizinkan
+        $allowedFormats = array('jpg', 'jpeg', 'png');
+    
+        // Format file
+        if (!in_array($imageFileType, $allowedFormats)) {
+            $_SESSION['upload_error'] = "Sorry, only JPG, JPEG, & PNG files are allowed.";
+            return false;
+        }
+    
+        // Cek apakah benar file gambar
         $check = getimagesize($file["tmp_name"]);
-        if($check === false) {
-            return "File is not an image.";
+        if ($check === false) {
+            $_SESSION['upload_error'] = "File is not an image.";
+            return false;
         }
-
-        // Ukuran gambar
+    
+        // Cek ukuran file
         if ($file["size"] > $maxFileSize) {
-            return "Sorry, your file is too large.";
+            $_SESSION['upload_error'] = "Sorry, your file is too large.";
+            return false;
         }
-
-        // Format gambar
-        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
-            return "Sorry, only JPG, JPEG, & PNG files are allowed.";
-        }
-
-        // Unik nama file
-        // $uniqueFileName = uniqid() . '.' . $imageFileType;
-        // $target_file = $target_dir . $uniqueFileName;
-
-        // Cek eror
-        if ($uploadOk == 0) {
-            return "Sorry, your file was not uploaded.";
+    
+        // Unggah file
+        if (move_uploaded_file($file["tmp_name"], $target_file)) {
+            return $target_file;
         } else {
-            if (move_uploaded_file($file["tmp_name"], $target_file)) {
-                return $target_file;
-            } else {
-                return "Sorry, there was an error uploading your file.";
-            }
+            $_SESSION['upload_error'] = "Sorry, there was an error uploading your file.";
+            return false;
         }
     }
 
     // Update button
-    if(isset($_POST['update'])){
+    if (isset($_POST['update'])) {
         $email = $_SESSION['email'];
         $name = mysqli_real_escape_string($con, $_POST['name']);
         $pekerjaan = mysqli_real_escape_string($con, $_POST['pekerjaan']);
@@ -234,17 +232,17 @@ if(isset($_POST['signup'])){
         $jenis_kelamin = mysqli_real_escape_string($con, $_POST['jenis_kelamin']);
         $tanggal_lahir = mysqli_real_escape_string($con, $_POST['tanggal_lahir']);
         $profile_image_path = "";
-
+        $errors = array();
+    
         // Buat unggah gambar
-        if(isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == 0) {
+        if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == 0) {
             $profile_image_path = uploadFile($_FILES['profile_image']);
-            if(strpos($profile_image_path, 'Sorry') !== false) {
-                $errors['file'] = $profile_image_path;
-                $profile_image_path = ""; // Reset profile
+            if ($profile_image_path === false) {
+                $errors['file'] = $_SESSION['upload_error'];
             }
         }
-
-        if(empty($errors)){
+    
+        if (empty($errors)) {
             $update_query = "UPDATE usertable SET 
                                 name = '$name', 
                                 pekerjaan = '$pekerjaan', 
@@ -252,22 +250,22 @@ if(isset($_POST['signup'])){
                                 alamat = '$alamat', 
                                 jenis_kelamin = '$jenis_kelamin', 
                                 tanggal_lahir = '$tanggal_lahir'";
-
-            if($profile_image_path != "") {
+    
+            if ($profile_image_path != "") {
                 $update_query .= ", profile_image = '$profile_image_path'";
             }
-
+    
             $update_query .= " WHERE email = '$email'";
-        
+    
             $update_result = mysqli_query($con, $update_query);
-        
-            if($update_result){
-                $info = "Profile updated successfully.";
-                $_SESSION['info'] = $info;
+    
+            if ($update_result) {
+                $_SESSION['info'] = "Profile updated successfully.";
                 header('location: ./');
                 exit();
             } else {
                 $errors['db-error'] = "Failed to update profile! " . mysqli_error($con);
+                $_SESSION['db_error'] = $errors['db-error'];
             }
         }
     }
@@ -279,6 +277,7 @@ if(isset($_POST['signup'])){
         $no_hp = mysqli_real_escape_string($con, $_POST['no_hp']);
         $alamat = mysqli_real_escape_string($con, $_POST['alamat']);
         $kamar = mysqli_real_escape_string($con, $_POST['kamar']);
+        $id_kamar = mysqli_real_escape_string($con, $_POST['id_kamar']);
         $tanggal_checkin = mysqli_real_escape_string($con, $_POST['tanggal_checkin']);
         $tanggal_checkout = mysqli_real_escape_string($con, $_POST['tanggal_checkout']);
 
@@ -286,17 +285,17 @@ if(isset($_POST['signup'])){
         $formatted_total_harga = number_format($total_harga, 0, ',', '.');
         $total_harga_rupiah = 'Rp.' . $formatted_total_harga;
 
-        $status = 'waiting';
+        $status = 'Silahkan melakukan pembayaran';
 
-        $insert_query = "INSERT INTO pesanan (email, name, no_hp, alamat, kamar, tanggal_checkin, tanggal_checkout, total_harga, status) 
-                         VALUES ('$email', '$name', '$no_hp', '$alamat', '$kamar', '$tanggal_checkin', '$tanggal_checkout', '$total_harga_rupiah', '$status')";
+        $insert_query = "INSERT INTO pesanan (email, name, no_hp, alamat, kamar,id_kamar, tanggal_checkin, tanggal_checkout, total_harga, status) 
+                         VALUES ('$email', '$name', '$no_hp', '$alamat', '$kamar', $id_kamar, '$tanggal_checkin', '$tanggal_checkout', '$total_harga_rupiah', '$status')";
 
         $insert_result = mysqli_query($con, $insert_query);
 
         if($insert_result){
             $info = "Berhasil melakukan pemesanan kamar.";
             $_SESSION['info'] = $info;
-            header('location: ./');
+            header('location: ../pesanan/');
             exit();
         } else {
             $errors['db-error'] = "Gagal melakukan pemesanan kamar!";
@@ -318,6 +317,69 @@ if(isset($_POST['signup'])){
         } else {
             $errors['db-error'] = "Gagal membatalkan pesanan: " . mysqli_error($con);
         }
-    }    
+    }
 
+    // Unggah bukti bayar
+    function uploadBayar($file) {
+        $target_dir = "../upload-bayar/";
+        $imageFileType = strtolower(pathinfo($file["name"], PATHINFO_EXTENSION));
+        $maxFileSize = 2000000;
+    
+        $check = getimagesize($file["tmp_name"]);
+        if ($check === false) {
+            return "File is not an image.";
+        }
+    
+        if ($file["size"] > $maxFileSize) {
+            return "Sorry, your file is too large.";
+        }
+    
+        if ($imageFileType != "jpg" && $imageFileType != "jpeg" && $imageFileType != "png") {
+            return "Sorry, only JPG, JPEG, & PNG files are allowed.";
+        }
+    
+        $target_file = $target_dir . basename($file["name"]);
+    
+        // if (file_exists($target_file)) {
+        //     return "Sorry, file already exists.";
+        // }
+    
+        // Upload IMAGE
+        if (move_uploaded_file($file["tmp_name"], $target_file)) {
+            return $target_file;
+        } else {
+            return "Sorry, there was an error uploading your file.";
+        }
+    }
+
+    // Bayar Button
+    if (isset($_POST['bayar'])) {
+        $email = $_SESSION['email'];
+        $id = mysqli_real_escape_string($con, $_POST['id']);
+        $bukti_bayar_path = "";
+    
+        if (isset($_FILES['bukti_bayar']) && $_FILES['bukti_bayar']['error'] == 0) {
+            $bukti_bayar_path = uploadBayar($_FILES['bukti_bayar']);
+            if (strpos($bukti_bayar_path, 'Sorry') !== false) {
+                $errors['file'] = $bukti_bayar_path;
+                $bukti_bayar_path = "";
+            }
+        }
+    
+        if (empty($errors) && $bukti_bayar_path != "") {
+            $update_query = "UPDATE pesanan SET bukti_bayar = '$bukti_bayar_path', status = 'Menunggu Verifikasi dari admin!' WHERE id = '$id' AND email = '$email'";
+    
+            $update_result = mysqli_query($con, $update_query);
+    
+            if ($update_result) {
+                $info = "Bukti pembayaran berhasil diunggah. Menunggu verifikasi.";
+                $_SESSION['info'] = $info;
+                header('location: ./');
+                exit();
+            } else {
+                $errors['db-error'] = "Gagal mengunggah bukti pembayaran: " . mysqli_error($con);
+            }
+        }
+    }
+    
 ?>

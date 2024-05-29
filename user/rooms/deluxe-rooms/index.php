@@ -87,7 +87,7 @@ if($email != false && $password != false){
             <li><a href="../../#about">about</a></li>
             <li><a href="../../#rooms">rooms</a></li>
             <!-- <li><a href="#review">Review</a></li> -->
-            <li><a href="../../#news">news</a></li>
+            <!-- <li><a href="../../#news">news</a></li> -->
             <li><a href="../../#contact">contact</a></li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle text-success" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

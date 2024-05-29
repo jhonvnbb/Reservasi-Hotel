@@ -61,6 +61,9 @@ if($email != false && $password != false){
 
     <!-- Feather Icon -->
     <script src="https://unpkg.com/feather-icons"></script>
+
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   </head>
   <body>
     <header>
@@ -74,7 +77,7 @@ if($email != false && $password != false){
             <li><a href="../#about">about</a></li>
             <li><a href="../#rooms">rooms</a></li>
             <!-- <li><a href="../#review">Review</a></li> -->
-            <li><a href="../#news">news</a></li>
+            <!-- <li><a href="../#news">news</a></li> -->
             <li><a href="../#contact">contact</a></li>
             <li class="nav-item dropdown">
               <a
@@ -96,7 +99,7 @@ if($email != false && $password != false){
                 <li><a class="dropdown-item" href="./">Profile</a></li>
                 <li><a class="dropdown-item" href="../pesanan/">Pesanan Saya</a></li>
                 <li>
-                  <a class="dropdown-item" href="../logout-user.php">Log out</a>
+                  <a class="dropdown-item" href="#" onclick="return confirmLogout()">Log out</a>
                 </li>
               </ul>
             </li>
@@ -111,7 +114,7 @@ if($email != false && $password != false){
         <div class="sidebar">
           <div class="title">
             <h6><?php echo $fetch_info['name'] ?></h6>
-            <a href="./"> <i class="fa fa-pen"></i> Edit Profile </a>
+            <p class="mt-1" style="color: #aaa;"><i class="fa fa-pen"></i> Edit Profile</p>
           </div>
           <div class="isi">
             <a href="./" style="color: #16a085;"> <i class="fa fa-user"></i> Akun Saya </a>
@@ -162,18 +165,6 @@ if($email != false && $password != false){
             <label for="tanggal_lahir">Tanggal Lahir</label>
             <input type="date" name="tanggal_lahir" id="tanggal_lahir" value="<?php echo htmlspecialchars($fetch_info['tanggal_lahir'], ENT_QUOTES); ?>" required />
 
-            <?php
-              if(count($errors) > 0){
-                  foreach($errors as $error){
-                      echo "<div class='alert alert-danger text-center'>$error</div>";
-                  }
-              }
-              if(isset($_SESSION['info'])){
-                  echo "<div class='alert alert-success text-center'>".$_SESSION['info']."</div>";
-                  unset($_SESSION['info']);
-              }
-            ?>
-
             <button type="submit" name="update">SIMPAN</button>
           </form>
         </div>
@@ -182,12 +173,85 @@ if($email != false && $password != false){
 
     <script>
       function previewImage(event) {
-        var reader = new FileReader();
-        reader.onload = function() {
-          var output = document.getElementById('profileImage');
-          output.src = reader.result;
+        var file = event.target.files[0];
+        var fileType = file.type;
+        var validImageTypes = ["image/jpeg", "image/png", "image/jpg"];
+      
+        if (validImageTypes.includes(fileType)) {
+          var reader = new FileReader();
+          reader.onload = function() {
+            var output = document.getElementById('profileImage');
+            output.src = reader.result;
+          }
+          reader.readAsDataURL(file);
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Sorry, only JPG, JPEG, & PNG files are allowed.'
+          });
+          event.target.value = "";
         }
-        reader.readAsDataURL(event.target.files[0]);
+      }
+    </script>
+
+
+    <!-- Notif -->
+    <?php
+      if (isset($_SESSION['upload_error'])): ?>
+          <script>
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: '<?php echo $_SESSION['upload_error']; ?>'
+              });
+          </script>
+          <?php
+          unset($_SESSION['upload_error']);
+      endif;
+    
+      if (isset($_SESSION['db_error'])): ?>
+          <script>
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: '<?php echo $_SESSION['db_error']; ?>'
+              });
+          </script>
+          <?php
+          unset($_SESSION['db_error']);
+      endif;
+    
+      if (isset($_SESSION['info'])): ?>
+          <script>
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Success',
+                  text: '<?php echo $_SESSION['info']; ?>'
+              });
+          </script>
+          <?php
+          unset($_SESSION['info']);
+      endif;
+    ?>
+
+    <script>
+      function confirmLogout() {
+          Swal.fire({
+              title: 'Apakah Anda yakin ingin keluar?',
+              text: "Anda akan keluar dari sesi ini!",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Ya, keluar!',
+              cancelButtonText: 'Batal'
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  window.location.href = "../logout-user.php";
+              }
+          });
+          return false;
       }
     </script>
 
@@ -348,6 +412,8 @@ if($email != false && $password != false){
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
+
+    <script src="sweetalert2.all.min.js"></script>
 
     <script>
       feather.replace();

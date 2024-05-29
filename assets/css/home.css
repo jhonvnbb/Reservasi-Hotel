@@ -514,7 +514,7 @@
   /* Customer End */
   
   /* news Start */
-  .news {
+  /* .news {
     position: relative;
   }
   .news i {
@@ -556,7 +556,7 @@
   }
   .news .stext {
     padding: 0 0 0 20px;
-  }
+  } */
   /* news End */
   
   /* Kontak Start*/
@@ -583,7 +583,7 @@
   .kontak .konten .deskripsi h2 {
     margin-bottom: 30px;
     font-size: 42px;
-    font-weight: 400;
+    font-weight: 700;
   }
   .kontak .konten .deskripsi h2 span {
     font-weight: 700;

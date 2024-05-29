@@ -64,57 +64,56 @@
     padding: 13px 40px;
   }
   /* header .navlinks span{
-        display: none;
-    }
-    
-    @media screen and(max-width:768px){
-        header ul{
-            position: absolute;
-            top: 100px;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: #009f7f;
-            overflow: hidden;
-            transition: max-height 0.5s;
-            text-align: center;
-            z-index: 9;
-        }
-        header ul li{
-            display: block;
-        }
-        header ul li a{
-            color: white;
-        }
-        header i {
-            color: white;
-        }
-        header .navlinks span{
-            color: black;
-            display: block;
-            cursor: pointer;
-            line-height: 10vh;
-            font-size: 25px;
-        }
-    } */
+          display: none;
+      }
+      
+      @media screen and(max-width:768px){
+          header ul{
+              position: absolute;
+              top: 100px;
+              left: 0;
+              width: 100%;
+              height: 100vh;
+              background: #009f7f;
+              overflow: hidden;
+              transition: max-height 0.5s;
+              text-align: center;
+              z-index: 9;
+          }
+          header ul li{
+              display: block;
+          }
+          header ul li a{
+              color: white;
+          }
+          header i {
+              color: white;
+          }
+          header .navlinks span{
+              color: black;
+              display: block;
+              cursor: pointer;
+              line-height: 10vh;
+              font-size: 25px;
+          }
+      } */
   /* Header End */
-
-/* Pesanan Start */
-.pesanan {
+  
+  /* Pesanan Start */
+  .pesanan {
     display: flex;
     justify-content: center;
     align-items: center;
     background: #efefef;
     padding: 50px 0;
-    min-height: 100vh;
-}
-
-.wrapper {
+  }
+  
+  .wrapper {
     display: flex;
     width: 65%;
-}
-
-.sidebar {
+  }
+  
+  .sidebar {
     color: #212121;
     padding: 70px 0;
     width: 250px;
@@ -141,7 +140,7 @@
     margin-top: 5px;
   }
   
-  .sidebar .title a i{
+  .sidebar .title a i {
     margin-right: 10px;
   }
   
@@ -164,7 +163,7 @@
     font-weight: 600;
   }
   
-  .sidebar .isi a i{
+  .sidebar .isi a i {
     color: #16a085;
     margin-right: 10px;
   }
@@ -172,8 +171,8 @@
   .sidebar .isi a:hover {
     color: #1abc9c;
   }
-
-.konten {
+  
+  .konten {
     padding: 40px;
     flex-grow: 1;
     display: flex;
@@ -182,98 +181,115 @@
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-}
-
-.ticket {
+  }
+  
+  .ticket {
     width: 100%;
     border-radius: 10px;
     overflow: hidden;
-}
-
-.ticket-header {
+  }
+  
+  .ticket-header {
     display: flex;
     background-color: #16a085;
     padding: 30px;
     align-items: center;
     justify-content: space-around;
     color: #fff;
-}
-
-.ticket-header img {
-    width: 100px;
-    height: 100px;
+  }
+  
+  .ticket-header img {
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
-}
-
-.ticket-info h5 {
+    box-shadow: 1px 2px 8px #fff;
+  }
+  
+  .ticket-info h5 {
     margin: 0;
     font-size: 24px;
-}
-
-.ticket-info p {
-    margin: 10px 0 0;
+  }
+  
+  .ticket-info p {
+    margin: 5px 0 0;
     font-size: 18px;
-}
-
-.ticket-body {
+  }
+  
+  .ticket-body {
     padding: 30px;
-}
-
-.ticket-body h4 {
+  }
+  
+  .ticket-body h4 {
     margin-bottom: 20px;
     font-size: 28px;
     color: #16a085;
-}
-
-.ticket-body p {
+  }
+  
+  .ticket-body p {
     margin: 10px 0;
     font-size: 20px;
     color: #333;
-}
-
-form {
+  }
+  
+  form {
     margin-top: 30px;
-}
-
-.pesanan-item p{
-  font-size: 17px;
-  font-weight: 300;
-  font-style: italic;
-}
-
-.pesanan-item p span{
-  font-size: 23px;
-  color: #212121;
-  font-weight: 600;
-  font-style: normal;
-}
-.pesanan-item .harga{
-  font-size: 20px;
-  color: #aaa;
-  font-weight: 600;
-  font-style: normal;
-}
-
-.pesanan-item .harga span {
-  font-size: 45px;
-  color: #7fc142;
-  font-weight: 900;
-}
-
-form .form-label {
+    /* text-align: center; */
+  }
+  
+  .pesanan-item p {
+    font-size: 17px;
+    font-weight: 300;
+    font-style: italic;
+  }
+  
+  .pesanan-item p span {
+    font-size: 23px;
+    color: #212121;
+    font-weight: 600;
+    font-style: normal;
+  }
+  .pesanan-item .harga {
+    font-size: 20px;
+    color: #aaa;
+    font-weight: 600;
+    font-style: normal;
+  }
+  
+  .pesanan-item .harga span {
+    font-size: 45px;
+    color: #7fc142;
+    font-weight: 900;
+  }
+  
+  .status-pesanan {
+    box-shadow: 1px 2px 8px #efefef;
+    width: 400px;
+    margin: 10px 0 25px 0;
+  }
+  
+  .status-pesanan p {
+    font-size: 17px;
+    color: #212121;
+    font-weight: 100;
+    background-color: #efefef;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  form .form-label {
     font-size: 20px;
     color: #333;
     margin-bottom: 10px;
-}
-
-form .form-control {
+  }
+  
+  form .form-control {
     font-size: 18px;
     padding: 15px 30px;
     border-radius: 5px;
     margin-bottom: 20px;
-}
-
-form .btn {
+  }
+  
+  form .btn {
     background-color: #16a085;
     color: #fff;
     font-weight: 600;
@@ -283,15 +299,72 @@ form .btn {
     cursor: pointer;
     font-size: 20px;
     transition: background-color 0.3s ease;
-}
-
-form .btn:hover {
+  }
+  
+  form .btn:hover {
     background-color: #13876e;
-}
-
-.btn-cancel {
+  }
+  
+  .btn-cancel {
     margin-top: -7.4em;
     margin-left: 10em;
-}
+  }
 
-/* Pesanan End */
+  /* .button-lihat-status {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button-lihat-status:hover {
+    background-color: #45a049;
+  } */
+  /* Pesanan End */
+
+  /* Modal Header */
+  .modal-header {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .modal-title {
+    font-weight: 600;
+  }
+  
+  .modal-body {
+    padding: 20px;
+  }
+  
+  .user-info, .ticket-info, .additional-info {
+    margin-bottom: 20px;
+  }
+  
+  .user-info p, .ticket-info p, .additional-info p {
+    font-size: 1.1em;
+    margin: 10px 0;
+  }
+  
+  .modal-footer {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+  }
+  
+  .fas {
+    margin-right: 10px;
+    color: #007bff;
+  }

@@ -85,7 +85,7 @@ if($email != false && $password != false){
             <li><a href="../../#about">about</a></li>
             <li><a href="../../#rooms">rooms</a></li>
             <!-- <li><a href="#review">Review</a></li> -->
-            <li><a href="../../#news">news</a></li>
+            <!-- <li><a href="../../#news">news</a></li> -->
             <li><a href="../../#contact">contact</a></li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle text-success" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -135,22 +135,22 @@ if($email != false && $password != false){
             </div>
         </div>
         <div class="book">
-            <form action="" method="">
+            <form action="./" method="POST">
                 <h2>AstonServe Payment</h2>
                 <label for="email">Email</label>
-                <input type="email" name="email" id="email" value="<?php echo $fetch_info['email'] ?>" disabled>
+                <input type="email" name="email" id="email" value="<?php echo $fetch_info['email'] ?>" readonly>
 
                 <label for="name">Username</label>
-                <input type="text" name="name" id="name" value="<?php echo $fetch_info['name'] ?>" disabled>
+                <input type="text" name="name" id="name" value="<?php echo $fetch_info['name'] ?>" readonly>
 
                 <label for="no_hp">No Handphone</label>
-                <input type="text" name="no_hp" id="no_hp" value="<?php echo $fetch_info['no_hp'] ?>" disabled>
+                <input type="text" name="no_hp" id="no_hp" value="<?php echo $fetch_info['no_hp'] ?>" readonly>
                 
                 <label for="alamat">Alamat</label>
-                <input type="text" name="alamat" id="alamat" value="<?php echo $fetch_info['alamat'] ?>" disabled>
+                <input type="text" name="alamat" id="alamat" value="<?php echo $fetch_info['alamat'] ?>" readonly>
 
                 <label for="kamar">Kamar</label>
-                <input type="text" name="kamar" id="kamar" value="Twin-Rooms" disabled>
+                <input type="text" name="kamar" id="kamar" value="Twin-Rooms" readonly>
 
                 <label for="tanggal_checkin">Tanggal Check In</label>
                 <input type="date" name="tanggal_checkin" id="tanggal_checkin" required onchange="calculatePrice()">
@@ -158,9 +158,22 @@ if($email != false && $password != false){
                 <label for="tanggal_checkout">Tanggal Check Out</label>
                 <input type="date" name="tanggal_checkout" id="tanggal_checkout" required onchange="calculatePrice()">
 
+                <input type="hidden" name="total_harga" id="total_harga_input">
                 <div class="total-harga">
                     <h3>Total Harga: <br> <span id="total-harga">---</span></h3>
                 </div>
+
+                <?php
+                  if(count($errors) > 0){
+                      foreach($errors as $error){
+                          echo "<div class='alert alert-danger text-center'>$error</div>";
+                      }
+                  }
+                  if(isset($_SESSION['info'])){
+                      echo "<div class='alert alert-success text-center'>".$_SESSION['info']."</div>";
+                      unset($_SESSION['info']);
+                  }
+                ?>
 
                 <button type="submit" name="pesan">Pesan Sekarang</button>
             </form>
@@ -183,9 +196,12 @@ if($email != false && $password != false){
             if (dayDiff > 0) {
                 const totalPrice = dayDiff * pricePerNight;
                 document.getElementById('total-harga').textContent = `Rp.${totalPrice.toLocaleString('id-ID')},00`;
+                document.getElementById('total_harga_input').value = totalPrice;
             } else {
                 document.getElementById('total-harga').textContent = "Tanggal tidak valid";
+                document.getElementById('total_harga_input').value = ''; 
             }
+
         }
     }
 </script>
