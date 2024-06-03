@@ -9,28 +9,21 @@
     if($run_Sql){
         $fetch_info = mysqli_fetch_assoc($run_Sql);
         $username = $fetch_info['username'];
-
-        $total_kamar_query = "SELECT COUNT(*) as total_kamar FROM kamar";
-        $total_user_query = "SELECT COUNT(*) as total_user FROM usertable";
-        $total_admin_query = "SELECT COUNT(*) as total_admin FROM admin";
-        $total_pesanan_query = "SELECT COUNT(*) as total_pesanan FROM pesanan";
-        $total_tersedia_query = "SELECT SUM(tersedia) as total_tersedia FROM kamar";
-        $total_pesananDiverifikasi_query = "SELECT COUNT(*) as total_pesanan_diverifikasi FROM pesanan WHERE status = 'PESANAN DIVERIFIKASI'";
-
-        $total_kamar_result = mysqli_fetch_assoc(mysqli_query($con, $total_kamar_query))['total_kamar'];
-        $total_user_result = mysqli_fetch_assoc(mysqli_query($con, $total_user_query))['total_user'];
-        $total_admin_result = mysqli_fetch_assoc(mysqli_query($con, $total_admin_query))['total_admin'];
-        $total_pesanan_result = mysqli_fetch_assoc(mysqli_query($con, $total_pesanan_query))['total_pesanan'];
-        $total_tersedia_result = mysqli_fetch_assoc(mysqli_query($con, $total_tersedia_query))['total_tersedia'];
-        $total_pesananDiverifikasi_result = mysqli_fetch_assoc(mysqli_query($con, $total_pesananDiverifikasi_query))['total_pesanan_diverifikasi'];
-
     }
   }else{
     header('Location: ../');
   }
+
+  $sql = "SELECT * FROM pesanan";
+    $result = mysqli_query($con, $sql);
+
+    if(!$result) {
+        echo "Error fetching data: " . mysqli_error($con);
+        exit;
+    }
 ?>
 
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -38,8 +31,8 @@
     <title>AstonServe</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="../../assets/css/dashboard.css">
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/pesanan-admin.css">
 
     <!-- Font Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -73,7 +66,7 @@
       </div>
 
       <div class="sidebar-links">
-        <a class="link active">
+        <a href="../dashboard/" class="link">
           <img src="../../assets/svg/dashboard.svg" alt="">
           <span class="hidden">Dashboard</span>
         </a>
@@ -81,17 +74,15 @@
           <img src="../../assets/svg/kamar.svg" alt="">
           <span class="hidden">Kamar</span>
         </a>
-        <a href="../pesanan/" class="link">
+        <a class="link active">
           <img src="../../assets/svg/pesanan.svg" alt="">
           <span class="hidden">Pesanan</span>
         </a>
-        </li>
         <a href="../user/" class="link">
           <img src="../../assets/svg/user.svg" alt="">
           <span class="hidden">User</span>
         </a>
       </div>
-
 
       <div class="sidebar-bottom">
         <div class="sidebar-links">
@@ -118,57 +109,64 @@
         <div class="dropdown" style="float: right; margin: 10px;">
           <button class="dropbtn"><i class="fas fa-user" style="padding-right: 10px;"></i><?php echo $fetch_info['username'] ?></button>
           <div class="dropdown-content">
+            <a href="../dashboard/">Dashboard</a>
             <a href="../kamar/">Kamar</a>
-            <a href="../pesanan/">Pesanan</a>
             <a href="../user/">User</a>
             <a href="#" onclick="return confirmLogout()" style="color: #c90101"><i class="fas fa-lock" style="margin-right: 5px;"></i>Logout</a>
           </div>
         </div>
       </header>
 
-      <div class="dashboard">
-        <div class="dashboard-desk">
-          <h1>Dashboard</h1>
-          <p>Wellcome! <span>AstonServe Admin</span></p>
-        </div>
-        <div class="dashboard-card">
-            <div class="icon"><i class="fas fa-box"></i></div>
-            <h3>Total Model Kamar</h3>
-            <p><?php echo $total_kamar_result; ?></p>
-        </div>
-        <div class="dashboard-card">
-            <div class="icon"><i class="fas fa-users"></i></div>
-            <h3>Total User</h3>
-            <p><?php echo $total_user_result; ?></p>
-        </div>
-        <div class="dashboard-card">
-            <div class="icon"><i class="fas fa-cart-plus"></i></div>
-            <h3>Total Pesanan Diverifikasi</h3>
-            <p><?php echo $total_pesananDiverifikasi_result; ?></p>
-        </div>
-        <div class="dashboard-card">
-            <div class="icon"><i class="fas fa-shopping-cart"></i></div>
-            <h3>Total Pesanan</h3>
-            <p><?php echo $total_pesanan_result; ?></p>
-        </div>
-        <div class="dashboard-card">
-            <div class="icon"><i class="fas fa-user-shield"></i></div>
-            <h3>Total Admin</h3>
-            <p><?php echo $total_admin_result; ?></p>
-        </div>
-        <div class="dashboard-card">
-        <div class="icon"><i class="fas fa-boxes-packing"></i></div>
-          <h3>Total Kamar Tersedia</h3>
-          <p><?php echo $total_tersedia_result; ?></p>
-        </div>
-        <!-- <div class="dashboard-card total-stok">
-        <div class="icon"><i class="fas fa-boxes-packing"></i></div>
-          <h3>Total Kamar Tersedia</h3>
-          <p><?php echo $total_tersedia_result; ?></p>
-        </div> -->
-      </div>
+      <section class="content">
+        <h2>Daftar Pesanan</h2>
+        <table class="booking-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Email</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Address</th>
+              <th>Room</th>
+              <th>Check-in Date</th>
+              <th>Check-out Date</th>
+              <th>Total Price</th>
+              <th>Payment Proof</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php while($row = mysqli_fetch_assoc($result)) { ?>
+              <tr>
+                <td><?php echo $row['id']; ?></td>
+                <td><?php echo $row['email']; ?></td>
+                <td><?php echo $row['name']; ?></td>
+                <td><?php echo $row['no_hp']; ?></td>
+                <td><?php echo $row['alamat']; ?></td>
+                <td><?php echo $row['kamar']; ?></td>
+                <td><?php echo $row['tanggal_checkin']; ?></td>
+                <td><?php echo $row['tanggal_checkout']; ?></td>
+                <td><?php echo $row['total_harga']; ?></td>
+                <td><a href="<?php echo '../../user/upload-bayar/' . $row['bukti_bayar']; ?>" target="_blank">Lihat Bukti Bayar</a></td>
+                <td class="<?php 
+                  if ($row['status'] === 'PESANAN DIVERIFIKASI') {
+                    echo 'verified';
+                  } elseif ($row['status'] === 'PESANAN DITOLAK') {
+                    echo 'rejected';
+                  }
+                ?>">
+                  <span class="status-text"><?php echo $row['status']; ?></span>
+                  <button class="edit-icon-btn" onclick="openEditModal('<?php echo $row['id']; ?>')">
+                    <i class="fas fa-edit edit-icon"></i>
+                  </button>
+                </td>
 
-      <footer>
+              </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+
+        <footer>
         <div class="social-icons">
             <a href="https://github.com/jhonvnbb" target="_blank"><i class="fab fa-github"></i></a>
             <a href="https://www.youtube.com/channel/UCML2M8j1wTcXTP8D0mHPhgw" target="_blank"><i class="fab fa-youtube"></i></a>
@@ -176,8 +174,48 @@
         </div>
         <p>&copy; 2024 <span>Aston Serve</span>. All Rights Reserved.</p>
       </footer>
+    </section>
+
+    <!-- Edit Status -->
+    <div id="editModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeEditModal()">&times;</span>
+        <h2>Edit Status Pesanan</h2>
+        <form action="./" method="POST" class="edit-form">
+          <input type="hidden" id="editId" name="id" value="">
+          <label for="status">Status:</label>
+          <select id="status" name="status">
+            <option value="PESANAN DITOLAK">PESANAN DITOLAK</option>
+            <option value="PESANAN DIVERIFIKASI">PESANAN DIVERIFIKASI</option>
+          </select>
+          <button type="submit" class="save-btn" name="edit_status">Simpan</button>
+        </form>
+      </div>
     </div>
 
+    <script>
+        var modal = document.getElementById('editModal');
+        var btn = document.getElementsByClassName("edit-icon-btn");
+        var span = document.getElementsByClassName("close")[0];
+
+        function openEditModal(id) {
+          modal.style.display = "block";
+          document.getElementById('editId').value = id;
+        }
+
+        function closeEditModal() {
+          modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+    </script>
+
+
+    <!-- Log out -->
     <script>
       function confirmLogout() {
           Swal.fire({
@@ -197,5 +235,6 @@
           return false;
       }
     </script>
+    
   </body>
 </html>

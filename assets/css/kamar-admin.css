@@ -139,6 +139,12 @@
     overflow: hidden;
     white-space: normal;
   }
+
+  .action-user{
+    width: 100px;
+    overflow: hidden;
+    white-space: normal;
+  }
   /* Main Content End
   
   /* Tambah Barang */

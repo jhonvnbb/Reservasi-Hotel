@@ -209,7 +209,7 @@ if($email != false && $password != false){
                   <?php if ($item['status'] === "PESANAN DIVERIFIKASI"): ?>
                     <div>
                       <a href="#" class="button-lihat-status" data-order-id="<?php echo $item['id']; ?>">
-                        LIHAT SEKARANG
+                        LIHAT PESANAN DIVERIFIKASI
                       </a>
                     </div>
                   <?php endif; ?>

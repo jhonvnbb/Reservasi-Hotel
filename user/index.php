@@ -90,6 +90,9 @@ while($row = mysqli_fetch_assoc($room_result)) {
       integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
       crossorigin="anonymous"
     ></script>
+
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
   </head>
   <body>
@@ -113,7 +116,7 @@ while($row = mysqli_fetch_assoc($room_result)) {
               <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                 <li><a class="dropdown-item" href="./profile/">Profile</a></li>
                 <li><a class="dropdown-item" href="./pesanan/">Pesanan Saya</a></li>
-                <li><a class="dropdown-item" href="./logout-user.php">Log out</a></li>
+                <li><a class="dropdown-item" href="#" onclick="return confirmLogout()">Log out</a></li>
               </ul>
             </li>
           </ul>
@@ -1107,5 +1110,25 @@ while($row = mysqli_fetch_assoc($room_result)) {
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
+
+    <script>
+      function confirmLogout() {
+          Swal.fire({
+              title: 'Apakah Anda yakin?',
+              text: "Anda akan keluar dari sesi ini!",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Ya, keluar!',
+              cancelButtonText: 'Batal'
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  window.location.href = "./logout-user.php";
+              }
+          });
+          return false;
+      }
+    </script>
   </body>
 </html>
