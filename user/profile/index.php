@@ -156,10 +156,10 @@ if($email != false && $password != false){
 
             <label>Jenis Kelamin</label>
             <div class="gender-options">
-              <input type="radio" id="male" name="jenis_kelamin" value="male" <?php echo ($fetch_info['jenis_kelamin'] == 'male') ? 'checked' : '' ?> required />
-              <label for="male">Male</label>
-              <input type="radio" id="female" name="jenis_kelamin" value="female" <?php echo ($fetch_info['jenis_kelamin'] == 'female') ? 'checked' : '' ?> required />
-              <label for="female">Female</label>
+              <input type="radio" id="male" name="jenis_kelamin" value="Laki-laki" <?php echo ($fetch_info['jenis_kelamin'] == 'Laki-laki') ? 'checked' : '' ?> required />
+              <label for="male">Laki-laki</label>
+              <input type="radio" id="female" name="jenis_kelamin" value="Perempuan" <?php echo ($fetch_info['jenis_kelamin'] == 'Perempuan') ? 'checked' : '' ?> required />
+              <label for="female">Perempuan</label>
             </div>
 
             <label for="tanggal_lahir">Tanggal Lahir</label>

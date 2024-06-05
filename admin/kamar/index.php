@@ -66,11 +66,11 @@
           <img src="../../assets/svg/kamar.svg" alt="">
           <span class="hidden">Kamar</span>
         </a>
-        <a class="link">
+        <a href="../pesanan/" class="link">
           <img src="../../assets/svg/pesanan.svg" alt="">
           <span class="hidden">Pesanan</span>
         </a>
-        <a class="link">
+        <a href="../user/" class="link">
           <img src="../../assets/svg/user.svg" alt="">
           <span class="hidden">User</span>
         </a>
@@ -102,8 +102,8 @@
           <button class="dropbtn"><i class="fas fa-user" style="padding-right: 10px;"></i><?php echo $fetch_info['username'] ?></button>
           <div class="dropdown-content">
             <a href="../dashboard/">Dashboard</a>
-            <a href="#">Pesanan</a>
-            <a href="#">User</a>
+            <a href="../pesanan/">Pesanan</a>
+            <a href="../user/">User</a>
             <a href="#" onclick="return confirmLogout()" style="color: #c90101"><i class="fas fa-lock" style="margin-right: 5px;"></i>Logout</a>
           </div>
         </div>
