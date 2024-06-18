@@ -59,6 +59,29 @@
 
     <!-- Sweet Alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+      .popup-settings {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        left: 6.6%; /* Adjust this value based on your layout */
+        bottom: 17%; /* Adjust this value based on your layout */
+      }
+
+      .popup-settings a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+      }
+
+      .popup-settings a:hover {
+        background-color: #f1f1f1;
+      }
+    </style>
   </head>
   <body>
     <nav>
@@ -92,10 +115,9 @@
         </a>
       </div>
 
-
       <div class="sidebar-bottom">
         <div class="sidebar-links">
-          <a class="link">
+          <a class="link" id="settings-link">
             <img src="../../assets/svg/settings.svg" alt="">
             <span class="hidden">Settings</span>
           </a>
@@ -121,7 +143,6 @@
             <a href="../kamar/">Kamar</a>
             <a href="../pesanan/">Pesanan</a>
             <a href="../user/">User</a>
-            <a href="#" onclick="return confirmLogout()" style="color: #c90101"><i class="fas fa-lock" style="margin-right: 5px;"></i>Logout</a>
           </div>
         </div>
       </header>
@@ -129,7 +150,7 @@
       <div class="dashboard">
         <div class="dashboard-desk">
           <h1>Dashboard</h1>
-          <p>Wellcome! <span>AstonServe Admin</span></p>
+          <p>Welcome! <span>AstonServe Admin</span></p>
         </div>
         <div class="dashboard-card">
             <div class="icon"><i class="fas fa-box"></i></div>
@@ -161,11 +182,6 @@
           <h3>Total Kamar Tersedia</h3>
           <p><?php echo $total_tersedia_result; ?></p>
         </div>
-        <!-- <div class="dashboard-card total-stok">
-        <div class="icon"><i class="fas fa-boxes-packing"></i></div>
-          <h3>Total Kamar Tersedia</h3>
-          <p><?php echo $total_tersedia_result; ?></p>
-        </div> -->
       </div>
 
       <footer>
@@ -178,23 +194,41 @@
       </footer>
     </div>
 
+    <div class="popup-settings" id="settings-popup">
+      <a href="#" onclick="return confirmLogout()" style="color: #c90101"><i class="fas fa-lock" style="margin-right: 5px;"></i>Logout</a>
+    </div>
+
     <script>
+      const settingsLink = document.getElementById('settings-link');
+      const settingsPopup = document.getElementById('settings-popup');
+
+      settingsLink.addEventListener('click', function(event) {
+        event.stopPropagation();
+        settingsPopup.style.display = settingsPopup.style.display === 'block' ? 'none' : 'block';
+      });
+
+      document.addEventListener('click', function(event) {
+        if (!settingsPopup.contains(event.target) && event.target !== settingsLink) {
+          settingsPopup.style.display = 'none';
+        }
+      });
+
       function confirmLogout() {
-          Swal.fire({
-              title: 'Apakah Anda yakin?',
-              text: "Anda akan keluar dari sesi ini!",
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Ya, keluar!',
-              cancelButtonText: 'Batal'
-          }).then((result) => {
-              if (result.isConfirmed) {
-                  window.location.href = "../logout.php";
-              }
-          });
-          return false;
+        Swal.fire({
+          title: 'Apakah Anda yakin?',
+          text: "Anda akan keluar dari sesi ini!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ya, keluar!',
+          cancelButtonText: 'Batal'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "../logout.php";
+          }
+        });
+        return false;
       }
     </script>
   </body>
